@@ -17,3 +17,8 @@ This is a react-native application (without expo). You need to setup some things
 6. When having either a device plugged in or an emulator running, open any bash script (e.g. Git Bash) inside of the MealSuggestionApp root folder and type in `react-native run-android`. Some additional windows will open before the app starts running on your device.
 
 For a more detailed explanation see https://reactnative.dev/docs/environment-setup 
+
+## MealSuggestionDatabase
+This folder contains all SQL-Files for migrating a database. When deploying a new version of front- and backend, these files will be executed one by one
+
+## MealSuggestionBackend
