@@ -22,3 +22,5 @@ For a more detailed explanation see https://reactnative.dev/docs/environment-set
 This folder contains all SQL-Files for migrating a database. When deploying a new version of front- and backend, these files will be executed one by one
 
 ## MealSuggestionBackend
+Works as an interface between Frontend and Database. The backend needs to be running locally when using database and frontend locally.
+To edit the backend, please use Intellij https://www.jetbrains.com/de-de/idea/download/#section=windows for your system
