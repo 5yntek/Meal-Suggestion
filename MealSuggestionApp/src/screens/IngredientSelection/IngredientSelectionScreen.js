@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, SafeAreaView, FlatList } from "react-native";
+import { View, Text, SafeAreaView, FlatList, Button } from "react-native";
 import IngredientEntry from "./IngredientEntry";
 import { FloatingAction } from "react-native-floating-action";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
@@ -73,6 +73,10 @@ export default function IngredientSelectionScreen(props) {
     return <IngredientEntry ingredient={item} deleteItem={deleteItem} />;
   };
 
+  const goToRecipe = () => {
+    navigation.navigate("Recipe");
+  };
+
   const onAddIngredientPressed = (buttonName) => {
     if (buttonName === "cam") addByCamera();
     else if (buttonName === "search") addBySearch();
@@ -104,6 +108,7 @@ export default function IngredientSelectionScreen(props) {
         backgroundColor: "#EDF6F9",
       }}
     >
+      <Button title="Go to recipe" onPress={goToRecipe} />
       <FlatList
         style={{ width: "100%", margin: 10 }}
         data={ingredients}
