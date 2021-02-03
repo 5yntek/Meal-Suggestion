@@ -16,7 +16,17 @@ export default function RecipeScreen(props) {
         alignItems: "center",
         backgroundColor: "#EDF6F9",}}>
 
-        <Image source={item.path}/>
+        <Image 
+          style={{
+            alignSelf: 'center',
+            height: 150,
+            width: 150,
+            borderWidth: 1,
+            borderRadius: 75
+          }}
+          source={item.path}
+          resizeMode="stretch"
+          />
           <Text>{item.title}</Text>
       </View>
     );
