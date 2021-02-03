@@ -55,7 +55,7 @@ export default function IngredientSelectionScreen(props) {
         ...ingredients,
         ings.map((ingredient) => {
           console.log(ingredient);
-          return { id: uuid.v1(), title: ingredient };
+          return { title: ingredient };
         }),
       ]);
     }
