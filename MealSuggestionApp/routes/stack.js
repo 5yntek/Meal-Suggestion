@@ -4,7 +4,7 @@ import IngredientSelectionScreen from "../src/screens/IngredientSelection/Ingred
 import FiltersScreen from "../src/screens/FiltersScreen";
 import RecipeScreen from "../src/screens/RecipeScreen";
 import SearchIngredientScreen from "../src/screens/SearchIngredientScreen";
-import SearchResultScreen from "../src/screens/SearchResultScreen";
+import SearchResultScreen from "../src/screens/SearchResultScreen/SearchResultScreen";
 import CameraScreen from "../src/screens/CameraScreen/CameraScreen";
 import PictureApprovalScreen from "../src/screens/PictureApprovalScreen/PictureApprovalScreen";
 
