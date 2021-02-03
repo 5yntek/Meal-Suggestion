@@ -15,11 +15,18 @@ export default function SearchResultScreen(props) {
   const { navigation } = props;
 
   const [recipes, setRecipes] = useState([
-    { title: "Gulasch", path: require('../../../assets/Recipe_Props_Gulasch.jpg') },
-    { title: "Kaiserschmarrn", path: require('../../../assets/Recipe_Props_Kaiserschmarrn.jpg') },
-    { title: "Pizza", path: require('../../../assets/Recipe_Props_Pizza.jpg') },
-    { title: "Schnitzel", path: require('../../../assets/Recipe_Props_Schnitzel.jpg') }
+    {title: "Gulasch mit Tütensuppe", 
+    path: require('../../../assets/Recipe_Props_Gulasch.jpg'), 
+    ingredients: [{name: "Rinderfilet", unit: "g", amount: 560}, 
+                  {name: "Wasser", unit: "ml", amount: 1000}]
+    },
+    {title: "Kaiserschmarrn", path: require('../../../assets/Recipe_Props_Kaiserschmarrn.jpg'), ingredients: [{name: "Eier", unit: "", amount: 3}, 
+                                                                                                            {name: "Milch", unit: "l", amount: 500}]},
+    {title: "Pizza", path: require('../../../assets/Recipe_Props_Pizza.jpg')},
+    {title: "Schnitzel", path: require('../../../assets/Recipe_Props_Schnitzel.jpg')},
+    {title: "Halber Keks", path: require('../../../assets/Recipe_Props_Halber_Keks.jpeg')}
   ]);
+
 
   const openRecipe = (index) => {
     navigation.navigate("Recipe", { currentIndex: index, recipes: recipes });
