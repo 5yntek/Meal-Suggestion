@@ -4,7 +4,6 @@ import IngredientEntry from "./IngredientEntry";
 import { FloatingAction } from "react-native-floating-action";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 import { useState } from "react/cjs/react.development";
-import uuid from "react-native-uuid";
 
 const fabs = [
   {
@@ -39,15 +38,12 @@ export default function IngredientSelectionScreen(props) {
 
   const [ingredients, setIngredients] = useState([
     {
-      id: "0",
       title: "First Item",
     },
     {
-      id: "1",
       title: "Second Item",
     },
     {
-      id: "2",
       title: "Third Item",
     },
   ]);
@@ -73,8 +69,8 @@ export default function IngredientSelectionScreen(props) {
     return <IngredientEntry ingredient={item} deleteItem={deleteItem} />;
   };
 
-  const goToRecipe = () => {
-    navigation.navigate("Recipe");
+  const goToRecipes = () => {
+    navigation.navigate("SearchResult");
   };
 
   const onAddIngredientPressed = (buttonName) => {
@@ -84,7 +80,6 @@ export default function IngredientSelectionScreen(props) {
       setIngredients([
         ...ingredients,
         {
-          id: uuid.v1(),
           title: "Item number " + ingredients.length,
         },
       ]);
@@ -108,13 +103,17 @@ export default function IngredientSelectionScreen(props) {
         backgroundColor: "#EDF6F9",
       }}
     >
-      <Button title="Go to recipe" onPress={goToRecipe} />
       <FlatList
         style={{ width: "100%", margin: 10 }}
         data={ingredients}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.title}
       />
+      <Button style={{
+        width: "100%"
+      }}
+        title="Search recipes"
+        onPress={goToRecipes} />
       <FloatingAction
         actions={fabs}
         color="#83C5BE"
