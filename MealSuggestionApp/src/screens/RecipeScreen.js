@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text , SafeAreaView, Image} from "react-native";
+import { View, Text , SafeAreaView, Image, ScrollView} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 import Carousel from 'react-native-snap-carousel'
 
@@ -26,7 +26,7 @@ export default function RecipeScreen(props) {
     return (
       <View style={{
         flex: 1,
-        backgroundColor: "#66CCFF",}}>
+        backgroundColor: "#696969",}}>
           
         <Image 
           style={{
@@ -47,12 +47,19 @@ export default function RecipeScreen(props) {
           }}>
           {item.title}
         </Text>
-        <FlatList
-          style={{ width: "100%", margin: 10 }}
-          data={item.ingredients}
-          renderItem={renderIngredient}
-          keyExtractor={(item) => item.id}
-        /> 
+        <ScrollView
+          style={{ width: "90%", borderRadius: 5, margin: 10 , backgroundColor: "#d3d3d3"}}>
+          <FlatList
+            style={{margin: 10}}
+            data={item.ingredients}
+            renderItem={renderIngredient}
+            keyExtractor={(item) => item.title}
+          /> 
+          <Text
+          style={{margin: 10}}>
+            {item.description}
+          </Text>
+        </ScrollView>
       </View>
     );
   }

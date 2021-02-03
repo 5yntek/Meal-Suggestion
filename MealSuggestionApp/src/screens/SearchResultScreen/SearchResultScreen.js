@@ -18,13 +18,33 @@ export default function SearchResultScreen(props) {
     {title: "Gulasch mit Tütensuppe", 
     path: require('../../../assets/Recipe_Props_Gulasch.jpg'), 
     ingredients: [{name: "Rinderfilet", unit: "g", amount: 560}, 
-                  {name: "Wasser", unit: "ml", amount: 1000}]
+                  {name: "Wasser", unit: "ml", amount: 1000}],
+    description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
     },
-    {title: "Kaiserschmarrn", path: require('../../../assets/Recipe_Props_Kaiserschmarrn.jpg'), ingredients: [{name: "Eier", unit: "", amount: 3}, 
-                                                                                                            {name: "Milch", unit: "l", amount: 500}]},
-    {title: "Pizza", path: require('../../../assets/Recipe_Props_Pizza.jpg')},
-    {title: "Schnitzel", path: require('../../../assets/Recipe_Props_Schnitzel.jpg')},
-    {title: "Halber Keks", path: require('../../../assets/Recipe_Props_Halber_Keks.jpeg')}
+    {title: "Kaiserschmarrn", 
+    path: require('../../../assets/Recipe_Props_Kaiserschmarrn.jpg'), 
+    ingredients: [{name: "Eier", unit: "", amount: 3}, 
+                  {name: "Milch", unit: "l", amount: 500}],
+    description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+    },
+    {title: "Pizza", 
+    path: require('../../../assets/Recipe_Props_Pizza.jpg'), 
+    ingredients: [{name: "Tomaten", unit: "Stück", amount: 3}, 
+                  {name: "Teig", unit: "Stück", amount: 1}],
+    description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+    },
+    {title: "Schnitzel", 
+    path: require('../../../assets/Recipe_Props_Schnitzel.jpg'), 
+    ingredients: [{name: "Fleisch", unit: "g", amount: 500}, 
+                  {name: "Pommes", unit: "Stück", amount: 3}],
+    description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
+    },
+    {title: "Halber Keks", 
+    path: require('../../../assets/Recipe_Props_Halber_Keks.jpeg'), 
+    ingredients: [{name: "Haferflocken", unit: "", amount: 0.5}, 
+                  {name: "Gebäck", unit: "", amount: 0.5}],
+    description: "hallo"
+    }
   ]);
 
 
