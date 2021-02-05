@@ -1,9 +1,11 @@
 import React, { useEffect } from "react";
-import { View, Text, SafeAreaView, FlatList, Button } from "react-native";
+import { SafeAreaView, FlatList, Text } from "react-native";
 import IngredientEntry from "./IngredientEntry";
 import { FloatingAction } from "react-native-floating-action";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react/cjs/react.development";
+import Colors from "../../utils/Colors";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const fabs = [
   {
@@ -11,23 +13,25 @@ const fabs = [
     name: "cam",
     icon: <Ionicons name="camera" color="white" />,
     position: 1,
-    color: "#83C5BE",
+    color: Colors.green,
   },
   {
     text: "Search",
     name: "search",
     icon: <Ionicons name="search" color="white" />,
-    position: 1,
-    color: "#83C5BE",
+    position: 2,
+    color: Colors.green,
   },
   {
     text: "For Test",
     name: "test",
     icon: <Ionicons name="add" color="white" />,
-    position: 1,
-    color: "#83C5BE",
+    position: 3,
+    color: Colors.green,
   },
 ];
+
+const newIngredientsOrder = ["fluor", "apple", "pea", "banana", "sugar", "tomato", "cheese", "salami", "ham", "garlic", "onion", "lettuce", "egg", "water", "milk"];
 
 /**
  * Screen with a list of all selected ingredients. Allows to add and remove ingredients
@@ -36,17 +40,8 @@ const fabs = [
 export default function IngredientSelectionScreen(props) {
   const { navigation } = props;
 
-  const [ingredients, setIngredients] = useState([
-    {
-      title: "First Item",
-    },
-    {
-      title: "Second Item",
-    },
-    {
-      title: "Third Item",
-    },
-  ]);
+  const [ingredients, setIngredients] = useState(newIngredientsOrder.slice(0, 3).map(e => { return { title: e } }));
+  const [newIngredientsIndex, setNewIngredientsIndex] = useState(3);
 
   useEffect(() => {
     const ings = navigation.getParam("ingredients");
@@ -61,8 +56,8 @@ export default function IngredientSelectionScreen(props) {
     }
   }, [navigation]);
 
-  const deleteItem = (id) => {
-    setIngredients(ingredients.filter((item) => item.id !== id));
+  const deleteItem = (title) => {
+    setIngredients(ingredients.filter((item) => item.title !== title));
   };
 
   const renderItem = ({ item }) => {
@@ -80,9 +75,10 @@ export default function IngredientSelectionScreen(props) {
       setIngredients([
         ...ingredients,
         {
-          title: "Item number " + ingredients.length,
+          title: newIngredientsOrder[newIngredientsIndex],
         },
       ]);
+      setNewIngredientsIndex((newIngredientsIndex + 1) % newIngredientsOrder.length);
     }
   };
 
@@ -100,23 +96,30 @@ export default function IngredientSelectionScreen(props) {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#EDF6F9",
+        backgroundColor: Colors.beige,
       }}
     >
       <FlatList
-        style={{ width: "100%", margin: 10 }}
+        style={{ width: "100%", marginHorizontal: 10 }}
         data={ingredients}
         renderItem={renderItem}
         keyExtractor={(item) => item.title}
       />
-      <Button style={{
-        width: "100%"
-      }}
+      <TouchableOpacity
+        activeOpacity={0.6}
+        style={{
+          width: "100%",
+          backgroundColor: Colors.green,
+          padding: 10
+        }}
+
         title="Search recipes"
-        onPress={goToRecipes} />
+        onPress={goToRecipes} >
+        <Text>Search Recipes</Text>
+      </TouchableOpacity>
       <FloatingAction
         actions={fabs}
-        color="#83C5BE"
+        color={Colors.green}
         onPressItem={onAddIngredientPressed}
       />
     </SafeAreaView>

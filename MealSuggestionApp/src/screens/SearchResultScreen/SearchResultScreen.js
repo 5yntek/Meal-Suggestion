@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { View, Text, FlatList, SafeAreaView, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Carousel from 'react-native-snap-carousel'
+import Colors from '../../utils/Colors'
 
 /**
  * Displays list of recipes which match the given ingredients and filters
@@ -73,6 +73,8 @@ export default function SearchResultScreen(props) {
           height: "100%",
           width: ITEM_HEIGHT,
           aspectRatio: 1,
+          borderTopLeftRadius: 6,
+          borderBottomLeftRadius: 6,
         }}
           resizeMode="cover" />
         <View style={{
@@ -103,7 +105,7 @@ export default function SearchResultScreen(props) {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: "#EDF6F9",
+        backgroundColor: Colors.beige,
         padding: 5,
       }}
     >
