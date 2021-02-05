@@ -49,6 +49,16 @@ export default function IngredientSelectionScreen(props) {
   ]);
 
   useEffect(() => {
+    fetchNStuff();
+  }, []);
+
+  const fetchNStuff = () => {
+    fetch("http://192.168.178.106:7000/hello/Duda").then((data) =>
+      console.log(data)
+    );
+  };
+
+  useEffect(() => {
     const ings = navigation.getParam("ingredients");
     if (ings) {
       setIngredients([
@@ -70,6 +80,7 @@ export default function IngredientSelectionScreen(props) {
   };
 
   const goToRecipes = () => {
+    fetchNStuff();
     navigation.navigate("SearchResult");
   };
 
@@ -109,11 +120,13 @@ export default function IngredientSelectionScreen(props) {
         renderItem={renderItem}
         keyExtractor={(item) => item.title}
       />
-      <Button style={{
-        width: "100%"
-      }}
+      <Button
+        style={{
+          width: "100%",
+        }}
         title="Search recipes"
-        onPress={goToRecipes} />
+        onPress={goToRecipes}
+      />
       <FloatingAction
         actions={fabs}
         color="#83C5BE"
