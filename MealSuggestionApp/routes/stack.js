@@ -7,43 +7,66 @@ import SearchIngredientScreen from "../src/screens/SearchIngredientScreen";
 import SearchResultScreen from "../src/screens/SearchResultScreen/SearchResultScreen";
 import CameraScreen from "../src/screens/CameraScreen/CameraScreen";
 import PictureApprovalScreen from "../src/screens/PictureApprovalScreen/PictureApprovalScreen";
+import Colors from "../src/utils/Colors";
 
 const screens = {
   IngredientSelection: {
     screen: IngredientSelectionScreen,
+    navigationOptions: {
+      title: "Ingredients"
+    }
   },
   Camera: {
     screen: CameraScreen,
+    navigationOptions: {
+      title: "",
+      headerStyle: {
+        backgroundColor: "transparent"
+      }
+    }
   },
   PictureApproval: {
     screen: PictureApprovalScreen,
+    navigationOptions: {
+      title: "Is this picture fine?"
+    }
   },
   Filters: {
     screen: FiltersScreen,
+    navigationOptions: {
+      title: "Filters"
+    }
   },
   Recipe: {
     screen: RecipeScreen,
+    navigationOptions: {
+      title: "Recipes"
+    }
   },
   SearchIngredient: {
     screen: SearchIngredientScreen,
+    navigationOptions: {
+      title: "Find by name"
+    }
   },
   SearchResult: {
     screen: SearchResultScreen,
+    navigationOptions: {
+      title: "Recipes"
+    }
   },
 };
 
 const Stack = createStackNavigator(screens, {
   defaultNavigationOptions: {
-    headerStyle: { backgroundColor: "#83C5BE" },
+    headerStyle: {
+      backgroundColor: Colors.red
+    },
+    headerTitleStyle: {
+      color: "white"
+    }
   },
 });
 
-/**
- * 006D77
- * 42999B
- * 83C5BE
- * EDF6F9
- * FFDDD2
- */
 
 export default createAppContainer(Stack);

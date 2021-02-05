@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import { View, Text, SafeAreaView, Image, ScrollView, ImageBackground } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
 import Carousel, { Pagination } from 'react-native-snap-carousel'
 import { Dimensions } from 'react-native';
 import { LinearGradient } from "expo-linear-gradient";
 import { useRef } from "react";
+import Colors from '../utils/Colors';
 
 const itemScale = 1;
 
@@ -23,7 +23,11 @@ export default function RecipeScreen(props) {
 
   const renderIngredient = (item) => {
     return (
-      <View key={item.name}>
+      <View key={item.name} style={{
+        borderBottomColor: "#eeeeee",
+        borderBottomWidth: 1,
+        paddingVertical: 10,
+      }}>
         <Text style={{ width: "90%" }}>
           {item.name + ": " + item.amount + " " + item.unit}
         </Text>
@@ -31,12 +35,14 @@ export default function RecipeScreen(props) {
     );
   }
 
-  const _renderItem = ({ item, index }) => {
+  const renderRecipe = ({ item, index }) => {
     return (
-      <View style={{
-        flex: 1,
-        backgroundColor: "white",
-      }}>
+      <View
+        key={index}
+        style={{
+          flex: 1,
+          backgroundColor: "white",
+        }}>
         <ScrollView>
           <View style={{ padding: 8 }}>
             <View>
@@ -96,11 +102,11 @@ export default function RecipeScreen(props) {
         data={carouselItems}
         sliderWidth={screenWidth}
         itemWidth={itemScale * screenWidth}
-        renderItem={_renderItem}
+        renderItem={renderRecipe}
         keyExtractor={(item) => item.title}
         onSnapToItem={(index) => setCurrentIndex(index)}
         contentContainerCustomStyle={{
-          backgroundColor: "#424444"
+          backgroundColor: Colors.beige
         }}
       />
 
