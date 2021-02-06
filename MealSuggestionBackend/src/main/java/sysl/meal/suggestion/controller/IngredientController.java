@@ -17,8 +17,8 @@ public class IngredientController {
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    @PostMapping("/ingredients")
-    public List<Ingredient> requestHelloWorld() {
+    @GetMapping("/ingredients")
+    public List<Ingredient> requestAll() {
         return ingredientRepository.findAll();
     }
 

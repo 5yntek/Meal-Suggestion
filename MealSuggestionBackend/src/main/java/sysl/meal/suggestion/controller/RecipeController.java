@@ -4,6 +4,7 @@ package sysl.meal.suggestion.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +24,12 @@ public class RecipeController {
     @Autowired
     private RecipeRepository recipeRepository;
 
-    @PostMapping("/recipes/search")
+    @GetMapping("/recipes")
+    public List<Recipe> requestAllRecipes() {
+        return recipeRepository.findAll();
+    }
+
+    @PostMapping("/recipes")
     public List<Recipe> requestRecipesContainingIngredients(@RequestBody List<Ingredient> ingredients) {
         List<Recipe> recipes = recipeRepository.findAll();
 
