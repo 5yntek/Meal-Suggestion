@@ -30,9 +30,7 @@ function LoadingScreen(props) {
   const fetchIngredients = () => {
     setCurrentStatus("Fetching Ingredients...");
     setIsLoading(true);
-    fetch("http://192.168.178.106:7010/ingredients", {
-      method: "POST",
-    })
+    fetch("http://briskled.de:7010/ingredients")
       .catch((error) => {
         setCurrentStatus("Error while fetching ingredients: " + error);
         setIsLoading(false);
@@ -51,7 +49,7 @@ function LoadingScreen(props) {
             actions: [
               NavigationActions.navigate({
                 routeName: "IngredientSelection",
-                params: { allIngredients: json },
+                params: { knownIngredients: json },
               }),
             ],
           })

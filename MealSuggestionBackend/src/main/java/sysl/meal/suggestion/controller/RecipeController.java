@@ -29,14 +29,18 @@ public class RecipeController {
         return recipeRepository.findAll();
     }
 
+    /**
+     * Expects list of ingredient id's
+     * @param ingredients
+     * @return
+     */
     @PostMapping("/recipes")
-    public List<Recipe> requestRecipesContainingIngredients(@RequestBody List<Ingredient> ingredients) {
+    public List<Recipe> requestRecipesContainingIngredients(@RequestBody List<Integer> ingredients) {
         List<Recipe> recipes = recipeRepository.findAll();
-
         return recipes.stream().filter(r -> {
-            List<Ingredient> contained = r.getIngredients();
+            List<Integer> contained = r.getIngredients().stream().map(Ingredient::getId).collect(Collectors.toList());
             boolean containsAll = true;
-            for(Ingredient i : ingredients) {
+            for(int i : ingredients) {
                 if(!contained.contains(i)) {
                     containsAll = false;
                     break;

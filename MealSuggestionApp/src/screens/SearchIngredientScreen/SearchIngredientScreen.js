@@ -1,7 +1,10 @@
 import React from "react";
 import { View, Text } from "react-native";
-import { SearchBar } from "react-native-elements";
+import SearchBar from "../../shared/SearchBar";
 import { useState } from "react/cjs/react.development";
+import { FlatList } from "react-native-gesture-handler";
+import IngredientEntrySmall from "./IngredientEntrySmall";
+import { NavigationActions, StackActions } from "react-navigation";
 
 /**
  * Little search engine to search ingredients by name
@@ -9,24 +12,89 @@ import { useState } from "react/cjs/react.development";
  */
 export default function SearchIngredientScreen(props) {
   const [searchText, setSearchText] = useState("");
+  const [searchResult, setSearchResult] = useState([]);
+
+  const { navigation } = props;
+  const knownIngredients = navigation.getParam("knownIngredients");
+
+  const onSearchTextChanged = (value) => {
+    setSearchText(value);
+    setSearchResult(
+      value
+        ? knownIngredients.filter((i) =>
+            i.name.toLowerCase().includes(value.toLowerCase())
+          )
+        : []
+    );
+  };
+
+  const onSelectIngredient = (ingredient) => {
+    navigation.dispatch(
+      StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({
+            routeName: "IngredientSelection",
+            params: { ingredients: [ingredient] },
+          }),
+        ],
+      })
+    );
+  };
+
+  const renderSearchResult = ({ item, index }) => {
+    return (
+      <IngredientEntrySmall
+        ingredient={item}
+        key={index}
+        onSelect={() => onSelectIngredient(item)}
+      />
+    );
+  };
+
+  const renderContent = () => {
+    if (searchResult && searchResult.length > 0)
+      return (
+        <FlatList
+          style={{
+            borderTopWidth: 1,
+            borderTopColor: "#cccccc",
+            marginVertical: 10,
+            width: "100%",
+          }}
+          data={searchResult}
+          renderItem={renderSearchResult}
+          keyExtractor={(item) => item.id + ""}
+        />
+      );
+    else
+      return (
+        <Text
+          style={{
+            color: "#777777",
+            marginTop: 50,
+          }}
+        >
+          No ingredient found
+        </Text>
+      );
+  };
 
   return (
     <View
       style={{
-        flex: 1,
         justifyContent: "center",
         alignItems: "center",
         width: "100%",
+        padding: 10,
       }}
     >
       <SearchBar
-        placeholder="Search Ingredient..."
-        onChangeText={setSearchText}
         value={searchText}
-        style={{
-          width: "100%",
-        }}
+        onValueChanged={onSearchTextChanged}
+        placeholder="Search Ingredient"
       />
+      {renderContent()}
     </View>
   );
 }

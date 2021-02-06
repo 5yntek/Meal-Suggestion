@@ -1,5 +1,6 @@
 package sysl.meal.suggestion.db;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -39,6 +40,7 @@ public class Recipe {
     @JoinColumn(name = "recipe_id") // we need to duplicate the physical information
     private List<Uses> ingredientUsages;
 
+    @JsonIgnore
     public List<Ingredient> getIngredients() {
         return ingredientUsages.stream().map(u -> u.getIngredient()).collect(Collectors.toList());
     }

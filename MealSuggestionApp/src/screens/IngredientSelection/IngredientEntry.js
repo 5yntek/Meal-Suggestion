@@ -10,19 +10,19 @@ export default function IngredientEntry(props) {
 
   return (
     <View
-      style={
-        {
-          flex: 1,
-          flexDirection: "row",
-          justifyContent: "space-between",
-          padding: 15,
-          margin: 5,
-          backgroundColor: "white",
-          borderRadius: 5,
-          alignItems: "center",
-        }}
+      style={{
+        flex: 1,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        padding: 15,
+        margin: 5,
+        backgroundColor: "white",
+        borderRadius: 5,
+        alignItems: "center",
+      }}
+      key={ingredient.id}
     >
-      <Text>{ingredient.title}</Text>
+      <Text>{ingredient.name}</Text>
       <TouchableOpacity
         style={{
           alignItems: "center",
@@ -31,7 +31,7 @@ export default function IngredientEntry(props) {
           borderRadius: 50,
           padding: 3,
         }}
-        onPress={() => deleteItem(ingredient.title)}
+        onPress={() => deleteItem(ingredient.id)}
       >
         <Ionicons name="remove" color="white" size={20} />
       </TouchableOpacity>

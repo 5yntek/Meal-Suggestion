@@ -1,11 +1,18 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, SafeAreaView, Image, ScrollView, ImageBackground } from "react-native";
-import Carousel, { Pagination } from 'react-native-snap-carousel'
-import { Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Image,
+  ScrollView,
+  ImageBackground,
+} from "react-native";
+import Carousel, { Pagination } from "react-native-snap-carousel";
+import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useRef } from "react";
-import Colors from '../utils/Colors';
+import Colors from "../utils/Colors";
 
 const itemScale = 1;
 
@@ -15,7 +22,9 @@ const itemScale = 1;
  */
 export default function RecipeScreen(props) {
   const { navigation } = props;
-  const [currentIndex, setCurrentIndex] = useState(navigation.getParam("currentIndex"));
+  const [currentIndex, setCurrentIndex] = useState(
+    navigation.getParam("currentIndex")
+  );
   const carouselItems = navigation.getParam("recipes");
   const carousel = useRef();
 
@@ -23,17 +32,20 @@ export default function RecipeScreen(props) {
 
   const renderIngredient = (item) => {
     return (
-      <View key={item.name} style={{
-        borderBottomColor: "#eeeeee",
-        borderBottomWidth: 1,
-        paddingVertical: 10,
-      }}>
+      <View
+        key={item.id}
+        style={{
+          borderBottomColor: "#eeeeee",
+          borderBottomWidth: 1,
+          paddingVertical: 10,
+        }}
+      >
         <Text style={{ width: "90%" }}>
-          {item.name + ": " + item.amount + " " + item.unit}
+          {item.ingredient.name + ": " + item.amount + " " + item.unit}
         </Text>
       </View>
     );
-  }
+  };
 
   const renderRecipe = ({ item, index }) => {
     return (
@@ -42,7 +54,8 @@ export default function RecipeScreen(props) {
         style={{
           flex: 1,
           backgroundColor: "white",
-        }}>
+        }}
+      >
         <ScrollView>
           <View style={{ padding: 8 }}>
             <View>
@@ -50,42 +63,46 @@ export default function RecipeScreen(props) {
                 style={{
                   flex: 1,
                   flexDirection: "row",
-                  alignSelf: 'center',
+                  alignSelf: "center",
                   height: 250,
                   width: "100%",
                 }}
-                source={item.path}
+                source={{ uri: item.picture }}
                 resizeMode="cover"
               >
                 <LinearGradient
-                  colors={['rgba(0,0,0,0.8)', 'rgba(0,0,0,0)']}
+                  colors={["rgba(0,0,0,0.8)", "rgba(0,0,0,0)"]}
                   start={{ x: 0, y: 1 }}
                   end={{ x: 0, y: 0 }}
                   style={{
                     alignSelf: "flex-end",
                     width: "100%",
-                    paddingTop: 40
-                  }}>
+                    paddingTop: 40,
+                  }}
+                >
                   <Text
                     style={{
-                      fontSize: 40,
+                      fontSize: 30,
                       color: "white",
                       fontWeight: "bold",
-                      margin: 10
-                    }}>{item.title}</Text>
+                      margin: 10,
+                    }}
+                  >
+                    {item.name}
+                  </Text>
                 </LinearGradient>
               </ImageBackground>
             </View>
 
-            {item.ingredients.map(ingredient => renderIngredient(ingredient))}
-            <Text style={{ marginVertical: 30 }}>
-              {item.description}
-            </Text>
+            {item.ingredientUsages.map((ingredient) =>
+              renderIngredient(ingredient)
+            )}
+            <Text style={{ marginVertical: 30 }}>{item.description}</Text>
           </View>
         </ScrollView>
       </View>
     );
-  }
+  };
 
   return (
     <SafeAreaView
@@ -95,7 +112,7 @@ export default function RecipeScreen(props) {
     >
       <Carousel
         ref={carousel}
-        layout={'tinder'}
+        layout={"tinder"}
         layoutCardOffset={18}
         style={{ backgroundColor: "#000" }}
         firstItem={currentIndex}
@@ -106,7 +123,7 @@ export default function RecipeScreen(props) {
         keyExtractor={(item) => item.title}
         onSnapToItem={(index) => setCurrentIndex(index)}
         contentContainerCustomStyle={{
-          backgroundColor: Colors.beige
+          backgroundColor: Colors.beige,
         }}
       />
 
@@ -135,10 +152,6 @@ export default function RecipeScreen(props) {
         tappableDots={true}
         delayPressInDot={0}
       />
-
     </SafeAreaView>
-
-
-
   );
 }

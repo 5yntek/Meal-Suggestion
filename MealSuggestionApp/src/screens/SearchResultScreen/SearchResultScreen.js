@@ -2,7 +2,8 @@ import React from "react";
 import { useState } from "react";
 import { View, Text, FlatList, SafeAreaView, Image } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import Colors from '../../utils/Colors'
+import { useEffect } from "react/cjs/react.development";
+import Colors from "../../utils/Colors";
 
 /**
  * Displays list of recipes which match the given ingredients and filters
@@ -13,91 +14,85 @@ const ITEM_HEIGHT = 80;
 
 export default function SearchResultScreen(props) {
   const { navigation } = props;
+  const ingredients = navigation.getParam("ingredients");
 
-  const [recipes, setRecipes] = useState([
-    {
-      title: "Gulasch mit Tütensuppe",
-      path: require('../../../assets/Recipe_Props_Gulasch.jpg'),
-      ingredients: [{ name: "Rinderfilet", unit: "g", amount: 560 },
-      { name: "Wasser", unit: "ml", amount: 1000 }],
-      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-    },
-    {
-      title: "Kaiserschmarrn",
-      path: require('../../../assets/Recipe_Props_Kaiserschmarrn.jpg'),
-      ingredients: [{ name: "Eier", unit: "", amount: 3 },
-      { name: "Milch", unit: "l", amount: 500 }],
-      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-    },
-    {
-      title: "Pizza",
-      path: require('../../../assets/Recipe_Props_Pizza.jpg'),
-      ingredients: [{ name: "Tomaten", unit: "Stück", amount: 3 },
-      { name: "Teig", unit: "Stück", amount: 1 }],
-      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-    },
-    {
-      title: "Schnitzel",
-      path: require('../../../assets/Recipe_Props_Schnitzel.jpg'),
-      ingredients: [{ name: "Fleisch", unit: "g", amount: 500 },
-      { name: "Pommes", unit: "Stück", amount: 3 }],
-      description: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."
-    },
-    {
-      title: "Halber Keks",
-      path: require('../../../assets/Recipe_Props_Halber_Keks.jpeg'),
-      ingredients: [{ name: "Haferflocken", unit: "", amount: 0.5 },
-      { name: "Gebäck", unit: "", amount: 0.5 }],
-      description: "hallo"
-    }
-  ]);
+  const [recipes, setRecipes] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
 
+  useEffect(() => {
+    searchRecipes()
+      .then((data) => data.json())
+      .then((json) => {
+        setRecipes(json);
+      });
+  }, [navigation]);
+
+  const searchRecipes = () => {
+    return fetch("http://briskled.de:7010/recipes", {
+      method: "POST",
+      body: JSON.stringify([3]),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  };
 
   const openRecipe = (index) => {
     navigation.navigate("Recipe", { currentIndex: index, recipes: recipes });
-  }
+  };
 
   const renderItem = ({ item, index }) => {
-    return <TouchableOpacity onPress={() => openRecipe(index)}>
-      <View style={{
-        width: "100%",
-        borderRadius: 6,
-        flex: 1,
-        flexDirection: "row",
-        height: ITEM_HEIGHT,
-        marginTop: 5,
-        backgroundColor: "white",
-      }}
-      >
-        <Image source={item.path} style={{
-          height: "100%",
-          width: ITEM_HEIGHT,
-          aspectRatio: 1,
-          borderTopLeftRadius: 6,
-          borderBottomLeftRadius: 6,
-        }}
-          resizeMode="cover" />
-        <View style={{
-          flex: 1,
-          flexDirection: "column",
-          justifyContent: "flex-start",
-          margin: 10,
-          flexGrow: 1
-        }}>
-          <Text style={{
-            borderBottomColor: "#eeeeee",
-            borderBottomWidth: 1,
-            fontSize: 20,
-          }}>
-            {item.title}
-          </Text>
-          <Text>Ist sehr lecker</Text>
+    return (
+      <TouchableOpacity onPress={() => openRecipe(index)}>
+        <View
+          style={{
+            width: "100%",
+            borderRadius: 6,
+            flex: 1,
+            flexDirection: "row",
+            height: ITEM_HEIGHT,
+            marginTop: 5,
+            backgroundColor: "white",
+          }}
+        >
+          <Image
+            source={{ uri: item.picture }}
+            style={{
+              height: "100%",
+              width: ITEM_HEIGHT,
+              aspectRatio: 1,
+              borderTopLeftRadius: 6,
+              borderBottomLeftRadius: 6,
+            }}
+            resizeMode="cover"
+          />
+          <View
+            style={{
+              flex: 1,
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              margin: 10,
+              flexGrow: 1,
+            }}
+          >
+            <Text
+              style={{
+                borderBottomColor: "#eeeeee",
+                borderBottomWidth: 1,
+                fontSize: 18,
+                fontWeight: "bold",
+              }}
+            >
+              {item.name}
+            </Text>
+            <Text numberOfLines={2} style={{ fontSize: 12 }}>
+              {item.description}
+            </Text>
+          </View>
         </View>
-
-      </View >
-
-    </TouchableOpacity>
-  }
+      </TouchableOpacity>
+    );
+  };
 
   return (
     <SafeAreaView
@@ -115,10 +110,6 @@ export default function SearchResultScreen(props) {
         renderItem={renderItem}
         keyExtractor={(item) => item.title}
       />
-
     </SafeAreaView>
-
-
-
   );
 }

@@ -22,31 +22,6 @@ const fabs = [
     position: 2,
     color: Colors.green,
   },
-  {
-    text: "For Test",
-    name: "test",
-    icon: <Ionicons name="add" color="white" />,
-    position: 3,
-    color: Colors.green,
-  },
-];
-
-const newIngredientsOrder = [
-  "fluor",
-  "apple",
-  "pea",
-  "banana",
-  "sugar",
-  "tomato",
-  "cheese",
-  "salami",
-  "ham",
-  "garlic",
-  "onion",
-  "lettuce",
-  "egg",
-  "water",
-  "milk",
 ];
 
 /**
@@ -56,52 +31,42 @@ const newIngredientsOrder = [
 export default function IngredientSelectionScreen(props) {
   const { navigation } = props;
 
-  const [ingredients, setIngredients] = useState(
-    newIngredientsOrder.slice(0, 3).map((e) => {
-      return { title: e };
-    })
-  );
-  const [newIngredientsIndex, setNewIngredientsIndex] = useState(3);
+  const [ingredients, setIngredients] = useState([]);
+  const [knownIngredients, setKnownIngredients] = useState([]);
 
   useEffect(() => {
     const ings = navigation.getParam("ingredients");
     if (ings) {
-      setIngredients([
-        ...ingredients,
-        ings.map((ingredient) => {
-          console.log(ingredient);
-          return { title: ingredient };
-        }),
-      ]);
+      setIngredients(distinct([...ingredients, ...ings]));
+    }
+
+    const known = navigation.getParam("knownIngredients");
+    if (known) {
+      setKnownIngredients(known);
     }
   }, [navigation]);
 
-  const deleteItem = (title) => {
-    setIngredients(ingredients.filter((item) => item.title !== title));
+  const distinct = (arr) => {
+    return [...new Set(arr)];
   };
 
-  const renderItem = ({ item }) => {
-    return <IngredientEntry ingredient={item} deleteItem={deleteItem} />;
+  const deleteItem = (id) => {
+    setIngredients(ingredients.filter((item) => item.id !== id));
+  };
+
+  const renderItem = ({ item, index }) => {
+    return (
+      <IngredientEntry ingredient={item} deleteItem={deleteItem} key={index} />
+    );
   };
 
   const goToRecipes = () => {
-    navigation.navigate("SearchResult");
+    navigation.navigate("SearchResult", { ingredients: ingredients });
   };
 
   const onAddIngredientPressed = (buttonName) => {
     if (buttonName === "cam") addByCamera();
     else if (buttonName === "search") addBySearch();
-    else if (buttonName === "test") {
-      setIngredients([
-        ...ingredients,
-        {
-          title: newIngredientsOrder[newIngredientsIndex],
-        },
-      ]);
-      setNewIngredientsIndex(
-        (newIngredientsIndex + 1) % newIngredientsOrder.length
-      );
-    }
   };
 
   const addByCamera = () => {
@@ -109,7 +74,9 @@ export default function IngredientSelectionScreen(props) {
   };
 
   const addBySearch = () => {
-    navigation.navigate("SearchIngredient");
+    navigation.navigate("SearchIngredient", {
+      knownIngredients: knownIngredients,
+    });
   };
 
   return (
@@ -125,7 +92,7 @@ export default function IngredientSelectionScreen(props) {
         style={{ width: "100%", marginHorizontal: 10 }}
         data={ingredients}
         renderItem={renderItem}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.id + ""}
       />
       <TouchableOpacity
         activeOpacity={0.6}
