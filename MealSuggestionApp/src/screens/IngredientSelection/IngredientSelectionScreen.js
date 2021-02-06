@@ -56,6 +56,7 @@ const newIngredientsOrder = [
 export default function IngredientSelectionScreen(props) {
   const { navigation } = props;
 
+  const [testMsg, setTestMsg] = useState("Nothing");
   const [ingredients, setIngredients] = useState(
     newIngredientsOrder.slice(0, 3).map((e) => {
       return { title: e };
@@ -68,9 +69,15 @@ export default function IngredientSelectionScreen(props) {
   }, []);
 
   const fetchNStuff = () => {
-    fetch("http://192.168.178.106:7000/hello/Duda").then((data) =>
-      console.log(data)
-    );
+    fetch("http://192.168.178.106:7000/recipe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify([{ name: "Test123" }, { name: "Test12345" }]),
+    })
+      .then((data) => data.json())
+      .then((json) => setTestMsg(JSON.stringify(json)));
   };
 
   useEffect(() => {
@@ -132,6 +139,7 @@ export default function IngredientSelectionScreen(props) {
         backgroundColor: Colors.beige,
       }}
     >
+      <Text>{testMsg}</Text>
       <FlatList
         style={{ width: "100%", marginHorizontal: 10 }}
         data={ingredients}

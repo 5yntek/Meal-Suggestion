@@ -13,6 +13,7 @@
     "@tensorflow/tfjs": "^2.8.4",
     "expo": "~40.0.0",
     "expo-camera": "~9.1.0",
+    "expo-linear-gradient": "~8.4.0",
     "expo-permissions": "~10.0.0",
     "expo-status-bar": "~1.0.3",
     "react": "16.13.1",
@@ -27,6 +28,7 @@
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.9",
     "react-native-screens": "~2.15.2",
+    "react-native-snackbar": "^2.3.2",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-torch": "^1.2.0",
     "react-native-uuid": "^1.4.9",
@@ -34,8 +36,7 @@
     "react-native-web": "~0.13.12",
     "react-navigation": "^4.4.3",
     "react-navigation-stack": "^2.10.2",
-    "uuid": "^8.3.2",
-    "expo-linear-gradient": "~8.4.0"
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"
