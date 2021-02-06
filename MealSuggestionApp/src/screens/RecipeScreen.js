@@ -120,7 +120,7 @@ export default function RecipeScreen(props) {
         sliderWidth={screenWidth}
         itemWidth={itemScale * screenWidth}
         renderItem={renderRecipe}
-        keyExtractor={(item) => item.title}
+        keyExtractor={(item) => item.id}
         onSnapToItem={(index) => setCurrentIndex(index)}
         contentContainerCustomStyle={{
           backgroundColor: Colors.beige,

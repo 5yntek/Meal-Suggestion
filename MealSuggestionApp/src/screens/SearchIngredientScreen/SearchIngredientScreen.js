@@ -5,17 +5,22 @@ import { useState } from "react/cjs/react.development";
 import { FlatList } from "react-native-gesture-handler";
 import IngredientEntrySmall from "./IngredientEntrySmall";
 import { NavigationActions, StackActions } from "react-navigation";
+import { connect } from "react-redux";
+import { selectKnownIngredients } from "../../../redux/ingredient.selector";
+import {
+  addSelectedIngredient,
+  setSelectedIngredients,
+} from "../../../redux/ingredients.action";
 
 /**
  * Little search engine to search ingredients by name
  * @param {*} props
  */
-export default function SearchIngredientScreen(props) {
+function SearchIngredientScreen(props) {
   const [searchText, setSearchText] = useState("");
   const [searchResult, setSearchResult] = useState([]);
 
-  const { navigation } = props;
-  const knownIngredients = navigation.getParam("knownIngredients");
+  const { navigation, knownIngredients, addSelectedIngredient } = props;
 
   const onSearchTextChanged = (value) => {
     setSearchText(value);
@@ -29,13 +34,13 @@ export default function SearchIngredientScreen(props) {
   };
 
   const onSelectIngredient = (ingredient) => {
+    addSelectedIngredient(ingredient);
     navigation.dispatch(
       StackActions.reset({
         index: 0,
         actions: [
           NavigationActions.navigate({
             routeName: "IngredientSelection",
-            params: { ingredients: [ingredient] },
           }),
         ],
       })
@@ -98,3 +103,18 @@ export default function SearchIngredientScreen(props) {
     </View>
   );
 }
+
+const mapStateToProps = (state) => ({
+  knownIngredients: selectKnownIngredients(state),
+});
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addSelectedIngredient: (ingredient) =>
+      dispatch(addSelectedIngredient(ingredient)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SearchIngredientScreen);

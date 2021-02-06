@@ -6,6 +6,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react/cjs/react.development";
 import Colors from "../../utils/Colors";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { connect } from "react-redux";
+import { selectSelectedIngredients } from "../../../redux/ingredient.selector";
+import {
+  removeSelectedIngredient,
+  setSelectedIngredients,
+} from "../../../redux/ingredients.action";
 
 const fabs = [
   {
@@ -28,30 +34,11 @@ const fabs = [
  * Screen with a list of all selected ingredients. Allows to add and remove ingredients
  * @param {*} props
  */
-export default function IngredientSelectionScreen(props) {
-  const { navigation } = props;
-
-  const [ingredients, setIngredients] = useState([]);
-  const [knownIngredients, setKnownIngredients] = useState([]);
-
-  useEffect(() => {
-    const ings = navigation.getParam("ingredients");
-    if (ings) {
-      setIngredients(distinct([...ingredients, ...ings]));
-    }
-
-    const known = navigation.getParam("knownIngredients");
-    if (known) {
-      setKnownIngredients(known);
-    }
-  }, [navigation]);
-
-  const distinct = (arr) => {
-    return [...new Set(arr)];
-  };
+function IngredientSelectionScreen(props) {
+  const { navigation, selectedIngredients, removeSelectedIngredient } = props;
 
   const deleteItem = (id) => {
-    setIngredients(ingredients.filter((item) => item.id !== id));
+    removeSelectedIngredient(id);
   };
 
   const renderItem = ({ item, index }) => {
@@ -61,7 +48,7 @@ export default function IngredientSelectionScreen(props) {
   };
 
   const goToRecipes = () => {
-    navigation.navigate("SearchResult", { ingredients: ingredients });
+    navigation.navigate("SearchResult");
   };
 
   const onAddIngredientPressed = (buttonName) => {
@@ -74,9 +61,7 @@ export default function IngredientSelectionScreen(props) {
   };
 
   const addBySearch = () => {
-    navigation.navigate("SearchIngredient", {
-      knownIngredients: knownIngredients,
-    });
+    navigation.navigate("SearchIngredient");
   };
 
   return (
@@ -90,7 +75,7 @@ export default function IngredientSelectionScreen(props) {
     >
       <FlatList
         style={{ width: "100%", marginHorizontal: 10 }}
-        data={ingredients}
+        data={selectedIngredients}
         renderItem={renderItem}
         keyExtractor={(item) => item.id + ""}
       />
@@ -114,3 +99,17 @@ export default function IngredientSelectionScreen(props) {
     </SafeAreaView>
   );
 }
+
+const mapStateToProps = (state) => ({
+  selectedIngredients: selectSelectedIngredients(state),
+});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeSelectedIngredient: (ingredient) =>
+      dispatch(removeSelectedIngredient(ingredient)),
+  };
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(IngredientSelectionScreen);

@@ -1,8 +1,15 @@
 import React from "react";
-import { Text, View } from "react-native";
-import * as tf from "@tensorflow/tfjs";
 import Navigator from "./routes/stack";
+import { Provider } from "react-redux";
+import { createStore } from "redux";
+import ingredientsReducer from "./redux/ingredients.reducer";
+
+const store = createStore(ingredientsReducer);
 
 export default function App() {
-  return <Navigator />;
+  return (
+    <Provider store={store}>
+      <Navigator />
+    </Provider>
+  );
 }

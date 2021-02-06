@@ -1,8 +1,17 @@
 import React from "react";
 import { useState } from "react";
-import { View, Text, FlatList, SafeAreaView, Image } from "react-native";
+import {
+  View,
+  Text,
+  FlatList,
+  SafeAreaView,
+  Image,
+  ActivityIndicator,
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { connect } from "react-redux";
 import { useEffect } from "react/cjs/react.development";
+import { selectSelectedIngredients } from "../../../redux/ingredient.selector";
 import Colors from "../../utils/Colors";
 
 /**
@@ -12,9 +21,8 @@ import Colors from "../../utils/Colors";
 
 const ITEM_HEIGHT = 80;
 
-export default function SearchResultScreen(props) {
-  const { navigation } = props;
-  const ingredients = navigation.getParam("ingredients");
+function SearchResultScreen(props) {
+  const { navigation, selectedIngredients } = props;
 
   const [recipes, setRecipes] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
@@ -24,13 +32,15 @@ export default function SearchResultScreen(props) {
       .then((data) => data.json())
       .then((json) => {
         setRecipes(json);
-      });
+      })
+      .then(() => setIsSearching(false));
   }, [navigation]);
 
   const searchRecipes = () => {
+    setIsSearching(true);
     return fetch("http://briskled.de:7010/recipes", {
       method: "POST",
-      body: JSON.stringify([3]),
+      body: JSON.stringify(selectedIngredients.map((i) => i.id)),
       headers: {
         "Content-Type": "application/json",
       },
@@ -54,6 +64,7 @@ export default function SearchResultScreen(props) {
             marginTop: 5,
             backgroundColor: "white",
           }}
+          key={index}
         >
           <Image
             source={{ uri: item.picture }}
@@ -94,6 +105,19 @@ export default function SearchResultScreen(props) {
     );
   };
 
+  const renderList = () => {
+    return recipes && recipes.length > 1 ? (
+      <FlatList
+        style={{ width: "100%", margin: 10 }}
+        data={recipes}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id + ""}
+      />
+    ) : (
+      <Text>There are no recipes matching your ingredients.</Text>
+    );
+  };
+
   return (
     <SafeAreaView
       style={{
@@ -104,12 +128,16 @@ export default function SearchResultScreen(props) {
         padding: 5,
       }}
     >
-      <FlatList
-        style={{ width: "100%", margin: 10 }}
-        data={recipes}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.title}
-      />
+      {isSearching ? (
+        <ActivityIndicator size="large" color={Colors.red} />
+      ) : (
+        renderList()
+      )}
     </SafeAreaView>
   );
 }
+
+const mapStateToProps = (state) => ({
+  selectedIngredients: selectSelectedIngredients(state),
+});
+export default connect(mapStateToProps)(SearchResultScreen);

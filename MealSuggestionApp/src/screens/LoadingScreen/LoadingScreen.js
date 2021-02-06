@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
-import {
-  ActivityIndicator,
-  View,
-  Text,
-  Platform,
-  Alert,
-  Button,
-} from "react-native";
+import { ActivityIndicator, View, Text } from "react-native";
 import { useState } from "react/cjs/react.development";
 import Colors from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { NavigationActions, StackActions } from "react-navigation";
+import { connect } from "react-redux";
+import { setKnownIngredients } from "../../../redux/ingredients.action";
+import { selectKnownIngredients } from "../../../redux/ingredient.selector";
 
 const status = {
   FETCH_INGREDIENTS: 2,
@@ -21,7 +17,7 @@ const status = {
 function LoadingScreen(props) {
   const [currentStatus, setCurrentStatus] = useState();
   const [isLoading, setIsLoading] = useState();
-  const { navigation } = props;
+  const { navigation, setKnownIngredients } = props;
 
   useEffect(() => {
     fetchIngredients();
@@ -43,13 +39,13 @@ function LoadingScreen(props) {
         }
       })
       .then((json) => {
+        setKnownIngredients(json);
         navigation.dispatch(
           StackActions.reset({
             index: 0,
             actions: [
               NavigationActions.navigate({
                 routeName: "IngredientSelection",
-                params: { knownIngredients: json },
               }),
             ],
           })
@@ -95,4 +91,10 @@ function LoadingScreen(props) {
   );
 }
 
-export default LoadingScreen;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setKnownIngredients: (ingredients) =>
+      dispatch(setKnownIngredients(ingredients)),
+  };
+};
+export default connect(null, mapDispatchToProps)(LoadingScreen);
