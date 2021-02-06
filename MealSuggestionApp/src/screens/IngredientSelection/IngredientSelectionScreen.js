@@ -16,7 +16,7 @@ const fabs = [
     color: Colors.green,
   },
   {
-    text: "Search",
+    text: "Search Ingredient",
     name: "search",
     icon: <Ionicons name="search" color="white" />,
     position: 2,
@@ -56,29 +56,12 @@ const newIngredientsOrder = [
 export default function IngredientSelectionScreen(props) {
   const { navigation } = props;
 
-  const [testMsg, setTestMsg] = useState("Nothing");
   const [ingredients, setIngredients] = useState(
     newIngredientsOrder.slice(0, 3).map((e) => {
       return { title: e };
     })
   );
   const [newIngredientsIndex, setNewIngredientsIndex] = useState(3);
-
-  useEffect(() => {
-    fetchNStuff();
-  }, []);
-
-  const fetchNStuff = () => {
-    fetch("http://192.168.178.106:7000/recipe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify([{ name: "Test123" }, { name: "Test12345" }]),
-    })
-      .then((data) => data.json())
-      .then((json) => setTestMsg(JSON.stringify(json)));
-  };
 
   useEffect(() => {
     const ings = navigation.getParam("ingredients");
@@ -102,7 +85,6 @@ export default function IngredientSelectionScreen(props) {
   };
 
   const goToRecipes = () => {
-    fetchNStuff();
     navigation.navigate("SearchResult");
   };
 
@@ -139,7 +121,6 @@ export default function IngredientSelectionScreen(props) {
         backgroundColor: Colors.beige,
       }}
     >
-      <Text>{testMsg}</Text>
       <FlatList
         style={{ width: "100%", marginHorizontal: 10 }}
         data={ingredients}
