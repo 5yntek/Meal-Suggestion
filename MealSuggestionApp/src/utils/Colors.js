@@ -3,7 +3,8 @@ export default {
   green: "#99AB74",
   beige: "#E2C194",
   orange: "#C73E29",
-  red: "#760E13"
+  red: "#760E13",
+  light: "#dedede"
 }
 
 

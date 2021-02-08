@@ -7,11 +7,13 @@ import {
   SafeAreaView,
   Image,
   ActivityIndicator,
+  ImageBackground,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { connect } from "react-redux";
 import { useEffect } from "react/cjs/react.development";
 import { selectSelectedIngredients } from "../../../redux/ingredient.selector";
+import { getRandomBackground } from "../../utils/BackgroundLibrary";
 import Colors from "../../utils/Colors";
 
 /**
@@ -31,12 +33,14 @@ function SearchResultScreen(props) {
     searchRecipes()
       .then((data) => data.json())
       .then((json) => {
+        console.log("received: ", json)
         setRecipes(json);
       })
       .then(() => setIsSearching(false));
   }, [navigation]);
 
   const searchRecipes = () => {
+    console.log(JSON.stringify(selectedIngredients.map((i) => i.id)));
     setIsSearching(true);
     return fetch("http://briskled.de:7010/recipes", {
       method: "POST",
@@ -106,7 +110,7 @@ function SearchResultScreen(props) {
   };
 
   const renderList = () => {
-    return recipes && recipes.length > 1 ? (
+    return recipes && recipes.length >= 1 ? (
       <FlatList
         style={{ width: "100%", margin: 10 }}
         data={recipes}
@@ -114,25 +118,45 @@ function SearchResultScreen(props) {
         keyExtractor={(item) => item.id + ""}
       />
     ) : (
-      <Text>There are no recipes matching your ingredients.</Text>
-    );
+        <Text>There are no recipes matching your ingredients.</Text>
+      );
   };
+
+  const getBackgroundSource = () => {
+    return recipes.length == 0 ? getRandomBackground() : { uri: recipes[0].picture }
+  }
 
   return (
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: Colors.beige,
-        padding: 5,
       }}
     >
-      {isSearching ? (
-        <ActivityIndicator size="large" color={Colors.red} />
-      ) : (
-        renderList()
-      )}
+      <ImageBackground
+        style={{
+          width: "100%",
+          height: "100%",
+        }}
+        blurRadius={10}
+        source={getBackgroundSource()}
+        resizeMode="cover"
+      >
+        <View
+          style={{
+            width: "100%",
+            height: "100%",
+            flex: 1,
+            padding: 5,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "rgba(0,0,0,0.4)"
+          }}>
+          {isSearching ? (
+            <ActivityIndicator size="large" color={Colors.red} />
+          ) : (
+              renderList()
+            )}</View>
+      </ImageBackground>
     </SafeAreaView>
   );
 }

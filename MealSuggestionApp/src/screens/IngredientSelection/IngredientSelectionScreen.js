@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { SafeAreaView, FlatList, Text } from "react-native";
 import IngredientEntry from "./IngredientEntry";
 import { FloatingAction } from "react-native-floating-action";
@@ -15,14 +15,14 @@ import {
 
 const fabs = [
   {
-    text: "From Camera",
+    text: "Take picture to add ingredients",
     name: "cam",
     icon: <Ionicons name="camera" color="white" />,
     position: 1,
     color: Colors.green,
   },
   {
-    text: "Search Ingredient",
+    text: "Search ingredient",
     name: "search",
     icon: <Ionicons name="search" color="white" />,
     position: 2,
@@ -36,6 +36,12 @@ const fabs = [
  */
 function IngredientSelectionScreen(props) {
   const { navigation, selectedIngredients, removeSelectedIngredient } = props;
+  const fab = useRef();
+
+  useEffect(() => {
+    if (selectedIngredients.length === 0)
+      fab.current.animateButton();
+  }, [navigation]);
 
   const deleteItem = (id) => {
     removeSelectedIngredient(id);
@@ -70,7 +76,7 @@ function IngredientSelectionScreen(props) {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
-        backgroundColor: Colors.beige,
+        backgroundColor: Colors.light,
       }}
     >
       <FlatList
@@ -92,6 +98,7 @@ function IngredientSelectionScreen(props) {
         <Text>Search Recipes</Text>
       </TouchableOpacity>
       <FloatingAction
+        ref={fab}
         actions={fabs}
         color={Colors.green}
         onPressItem={onAddIngredientPressed}

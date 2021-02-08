@@ -123,7 +123,7 @@ export default function RecipeScreen(props) {
         keyExtractor={(item) => item.id}
         onSnapToItem={(index) => setCurrentIndex(index)}
         contentContainerCustomStyle={{
-          backgroundColor: Colors.beige,
+          backgroundColor: Colors.gray,
         }}
       />
 

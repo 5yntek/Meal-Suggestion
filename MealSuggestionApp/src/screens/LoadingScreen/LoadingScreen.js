@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ActivityIndicator, View, Text } from "react-native";
+import { ActivityIndicator, View, Text, ImageBackground } from "react-native";
 import { useState } from "react/cjs/react.development";
 import Colors from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -8,6 +8,7 @@ import { NavigationActions, StackActions } from "react-navigation";
 import { connect } from "react-redux";
 import { setKnownIngredients } from "../../../redux/ingredients.action";
 import { selectKnownIngredients } from "../../../redux/ingredient.selector";
+import { getRandomBackground } from "../../utils/BackgroundLibrary";
 
 const status = {
   FETCH_INGREDIENTS: 2,
@@ -55,31 +56,43 @@ function LoadingScreen(props) {
 
   const renderIcon = () => {
     return isLoading ? (
-      <ActivityIndicator size="large" color={Colors.red} />
+      <ActivityIndicator size="large" color={Colors.beige} style={{
+        marginBottom: 20
+      }} />
     ) : (
-      <Ionicons name="alert-circle-outline" size={50} color={Colors.red} />
-    );
+        <Ionicons name="alert-circle-outline" size={50} color={Colors.red} />
+      );
   };
 
   return (
-    <View
+    <ImageBackground
+      source={getRandomBackground()}
+      resizeMode="cover"
       style={{
         flex: 1,
-        backgroundColor: Colors.beige,
+      }}
+    >
+      <View style={{
+        backgroundColor: "rgba(0,0,0,0.4)",
+        flex: 1,
+        flexDirection: "column",
+        width: "100%",
         justifyContent: "center",
         alignContent: "center",
         alignItems: "center",
-      }}
-    >
-      <View>
+      }}>
         {renderIcon()}
-        <Text>{currentStatus}</Text>
+        <Text style={{
+
+          color: "white"
+        }}>{currentStatus}</Text>
         {!isLoading && (
           <TouchableOpacity onPress={fetchIngredients}>
             <Text
               style={{
                 backgroundColor: Colors.green,
                 padding: 5,
+                color: "white"
               }}
             >
               Retry
@@ -87,7 +100,7 @@ function LoadingScreen(props) {
           </TouchableOpacity>
         )}
       </View>
-    </View>
+    </ImageBackground>
   );
 }
 

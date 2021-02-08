@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { View, Text } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../utils/Colors";
-import Animated, { Easing } from "react-native-reanimated";
 
 export default function IngredientEntry(props) {
   const { ingredient, deleteItem } = props;
