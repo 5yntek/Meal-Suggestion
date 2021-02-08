@@ -33,14 +33,14 @@ export default function RecipeScreen(props) {
   const renderIngredient = (item) => {
     return (
       <View
-        key={item.id}
+        key={item.ingredient.id + ":" + item.amount + item.unit}
         style={{
-          borderBottomColor: "#eeeeee",
+          borderBottomColor: "#444444",
           borderBottomWidth: 1,
           paddingVertical: 10,
         }}
       >
-        <Text style={{ width: "90%" }}>
+        <Text style={{ width: "90%", color: "white" }}>
           {item.ingredient.name + ": " + item.amount + " " + item.unit}
         </Text>
       </View>
@@ -53,7 +53,7 @@ export default function RecipeScreen(props) {
         key={index}
         style={{
           flex: 1,
-          backgroundColor: "white",
+          backgroundColor: Colors.gray,
         }}
       >
         <ScrollView>
@@ -97,7 +97,7 @@ export default function RecipeScreen(props) {
             {item.ingredientUsages.map((ingredient) =>
               renderIngredient(ingredient)
             )}
-            <Text style={{ marginVertical: 30 }}>{item.description}</Text>
+            <Text style={{ marginVertical: 30, color: "white" }}>{item.description}</Text>
           </View>
         </ScrollView>
       </View>

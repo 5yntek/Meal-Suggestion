@@ -70,15 +70,8 @@ function IngredientSelectionScreen(props) {
     navigation.navigate("SearchIngredient");
   };
 
-  return (
-    <SafeAreaView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: Colors.light,
-      }}
-    >
+  const renderList = () => {
+    return <>
       <FlatList
         style={{ width: "100%", marginHorizontal: 10 }}
         data={selectedIngredients}
@@ -97,6 +90,23 @@ function IngredientSelectionScreen(props) {
       >
         <Text>Search Recipes</Text>
       </TouchableOpacity>
+    </>
+  }
+
+  const renderPlaceholder = () => {
+    return <Text>Click on the + to add ingredients!</Text>
+  }
+
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: Colors.light,
+      }}
+    >
+      {selectedIngredients.length == 0 ? renderPlaceholder() : renderList()}
       <FloatingAction
         ref={fab}
         actions={fabs}

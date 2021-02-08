@@ -33,14 +33,12 @@ function SearchResultScreen(props) {
     searchRecipes()
       .then((data) => data.json())
       .then((json) => {
-        console.log("received: ", json)
         setRecipes(json);
       })
       .then(() => setIsSearching(false));
   }, [navigation]);
 
   const searchRecipes = () => {
-    console.log(JSON.stringify(selectedIngredients.map((i) => i.id)));
     setIsSearching(true);
     return fetch("http://briskled.de:7010/recipes", {
       method: "POST",
@@ -67,6 +65,8 @@ function SearchResultScreen(props) {
             height: ITEM_HEIGHT,
             marginTop: 5,
             backgroundColor: "white",
+            elevation: 3,
+            shadowColor: "red"
           }}
           key={index}
         >
@@ -137,7 +137,7 @@ function SearchResultScreen(props) {
           width: "100%",
           height: "100%",
         }}
-        blurRadius={10}
+        blurRadius={3}
         source={getBackgroundSource()}
         resizeMode="cover"
       >
@@ -149,7 +149,7 @@ function SearchResultScreen(props) {
             padding: 5,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "rgba(0,0,0,0.4)"
+            backgroundColor: "rgba(0,0,0,0.5)"
           }}>
           {isSearching ? (
             <ActivityIndicator size="large" color={Colors.red} />
