@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             public void onClick(View v) {
                 mResultView.setVisibility(View.INVISIBLE);
                 mImageIndex = (mImageIndex + 1) % mTestImages.length;
-                buttonTest.setText(String.format("Text Image %d/%d", mImageIndex + 1, mTestImages.length));
+                buttonTest.setText(String.format("Test Image %d/%d", mImageIndex + 1, mTestImages.length));
 
                 try {
                     mBitmap = BitmapFactory.decodeStream(getAssets().open(mTestImages[mImageIndex]));
@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
                 final CharSequence[] options = { "Choose from Photos", "Take Picture", "Cancel" };
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setTitle("New Test Image");
+                builder.setTitle("New Ingredients Image");
 
                 builder.setItems(options, new DialogInterface.OnClickListener() {
                     @Override
@@ -126,13 +126,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             }
         });
 
-//        final Button buttonLive = findViewById(R.id.liveButton);
-//        buttonLive.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//              final Intent intent = new Intent(MainActivity.this, ObjectDetectionActivity.class);
-//              startActivity(intent);
-//            }
-//        });
 
         mButtonDetect = findViewById(R.id.detectButton);
         mProgressBar = (ProgressBar) findViewById(R.id.progressBar);

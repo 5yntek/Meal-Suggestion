@@ -2,7 +2,7 @@
     <string name="app_name">MEAL SUGGESTION v0.1</string>
     <string name="image_view">Image View</string>
     <string name="detect">Detect</string>
-    <string name="run_model">Searching for ingridients…</string>
+    <string name="run_model">Searching for ingredients…</string>
     <string name="restart">Restart</string>
     <string name="select">Select</string>
     <string name="live">Live</string>

@@ -22,7 +22,7 @@ public class ResultView extends View {
 
     private final static int TEXT_X = 40;
     private final static int TEXT_Y = 35;
-    private final static int TEXT_WIDTH = 260;
+    private final static int TEXT_WIDTH = 200;
     private final static int TEXT_HEIGHT = 50;
 
     private Paint mPaintRectangle;
@@ -60,7 +60,9 @@ public class ResultView extends View {
             mPaintText.setStrokeWidth(0);
             mPaintText.setStyle(Paint.Style.FILL);
             mPaintText.setTextSize(32);
-            canvas.drawText(String.format("%s %.2f", PrePostProcessor.mClasses[result.classIndex], result.score), result.rect.left + TEXT_X, result.rect.top + TEXT_Y, mPaintText);
+            //canvas.drawText(String.format("%s %.2f", PrePostProcessor.mClasses[result.classIndex], result.score), result.rect.left + TEXT_X, result.rect.top + TEXT_Y, mPaintText);
+            canvas.drawText(String.format("%s", PrePostProcessor.mClasses[result.classIndex]), result.rect.left + TEXT_X, result.rect.top + TEXT_Y, mPaintText);
+
         }
     }
 
